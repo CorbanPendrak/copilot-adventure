@@ -1,5 +1,8 @@
 # copilot-adventure
+This is a repository to test creating code almost entirely with AI
 
-The main project files and roadmap have been moved to the `Shapeshifter-in-the-Forest` folder.
+# Shapeshifter in the Forest
+This is a web platformer game about finding where you belong. [Read more](Shapeshifter-in-the-Forest/README.md)
 
-See `Shapeshifter-in-the-Forest/README.md` for the current roadmap and project details.
+# Ascii Pong
+This is a little CLI implementation of pong using ascii. [Read more](cli-ascii-pong/README.md)
