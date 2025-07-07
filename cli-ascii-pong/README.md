@@ -9,8 +9,14 @@ A command-line Pong game rendered in ASCII art.
 - [x] Set up the project structure and initialize version control
 
 ### 2. Terminal Rendering
-- [ ] Research and select a method/library for terminal screen clearing and input handling
-- [ ] Implement a function to render the game field, paddles, and ball using ASCII characters
+- [x] Research and select a method/library for terminal screen clearing and input handling (`curses`)
+    - `curses` is a built-in Python library designed for creating text-based user interfaces in the terminal.
+    - It allows for efficient screen clearing and redrawing, reducing flicker and making real-time games smoother.
+    - Supports non-blocking keyboard input, which is essential for responsive paddle movement.
+    - Cross-platform (works on Linux and macOS by default; on Windows, install `windows-curses` via pip).
+    - No external dependencies required for most systems, making setup simple and portable.
+- [x] Implement a function to render the game field, paddles, and ball using ASCII characters
+
 
 ### 3. Game Loop
 - [ ] Create the main game loop to update and render the game state at a fixed interval
