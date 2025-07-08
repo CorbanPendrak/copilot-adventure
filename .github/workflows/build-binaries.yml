@@ -22,9 +22,10 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
+        shell: bash
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller
+          pip install -r cli-ascii-pong/requirements.txt
           if [ "${{ matrix.os }}" = "windows-latest" ]; then pip install windows-curses; fi
 
       - name: Build executable
@@ -44,5 +45,5 @@ jobs:
       - name: Upload executables as workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pong-binaries
+          name: pong-${{ matrix.os }}
           path: cli-ascii-pong/dist/*
