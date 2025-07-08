@@ -2,6 +2,14 @@
 
 A command-line Pong game rendered in ASCII art.
 
+## About This Project
+- This project uses [pydocstyle](https://www.pydocstyle.org/) to enforce Python docstring conventions and maintain high-quality documentation.
+- **Benefits of pydocstyle:**
+    - Ensures every public module, class, method, and function has a docstring.
+    - Checks for proper formatting and style of docstrings (PEP 257 compliance).
+    - Helps keep code understandable and maintainable for all contributors.
+    - Automatically runs on every commit to catch documentation issues early.
+
 ## Roadmap: Building a CLI ASCII Pong Game
 
 ### 1. Project Setup

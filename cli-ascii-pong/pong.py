@@ -31,6 +31,7 @@ ball_y = 10
 def render_game(stdscr, paddle1_y, paddle2_y, ball_x, ball_y):
     """
     Render the game field, paddles, and ball using ASCII characters.
+
     If the terminal is too small, display a warning and keep checking every second
     until the terminal is resized to a sufficient size.
     """
@@ -67,9 +68,10 @@ def render_game(stdscr, paddle1_y, paddle2_y, ball_x, ball_y):
 
 def game_loop(stdscr):
     """
-    Main game loop: updates and renders the game state at a fixed interval (0.1 seconds).
-    Uses time.sleep(0.1) to control the frame rate and reduce CPU usage.
-    Handles paddle movement: 'w'/'s' for left, up/down for right.
+    Update and render the game state at a fixed interval (0.1 seconds).
+
+    Use time.sleep(0.1) to control the frame rate and reduce CPU usage.
+    Handle paddle movement: 'w'/'s' for left, up/down for right.
     """
     # Initial positions
     paddle1_y = FIELD_HEIGHT // 2 - PADDLE_HEIGHT // 2
@@ -97,6 +99,7 @@ def game_loop(stdscr):
         time.sleep(0.05)  # Controls frame rate and reduces CPU usage
 
 def main():
+    """Run the CLI ASCII Pong game using curses."""
     curses.wrapper(game_loop)
 
 if __name__ == "__main__":
