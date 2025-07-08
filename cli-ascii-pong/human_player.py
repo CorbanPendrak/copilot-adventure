@@ -13,7 +13,7 @@ class HumanPlayer(Player):
     def __init__(self, side='left'):
         """Initialize a human player with a given side."""
         super().__init__(side)
-        self.characters = ["("] * self.height
+        self.characters = ["|"] * self.height
         
     def move(self, state, key=None):
         """Move the paddle based on keyboard input and game state."""

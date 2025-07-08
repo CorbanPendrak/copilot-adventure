@@ -43,7 +43,7 @@ class PredictAIPlayer(Player):
 
         # Now move paddle toward predicted y
         paddle_center = self.paddle_y + self.height // 2
-        if self.predicted_pos < self.paddle_y and self.paddle_y > 1:
+        if self.predicted_pos < self.paddle_y + 1 and self.paddle_y > 1:
             self.paddle_y -= 1
-        elif self.predicted_pos >= self.paddle_y + self.height and self.paddle_y < state.field_height - self.height + 1:
+        elif self.predicted_pos >= self.paddle_y - 1 + self.height and self.paddle_y < state.field_height - self.height + 1:
             self.paddle_y += 1

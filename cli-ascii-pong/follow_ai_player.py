@@ -21,5 +21,5 @@ class FollowAIPlayer(Player):
         if random.random() < 0.8:
             if state.ball_y < paddle_center and self.paddle_y > 1:
                 self.paddle_y -= 1
-            elif state.ball_y > paddle_center and self.paddle_y < FIELD_HEIGHT - self.height + 1:
+            elif state.ball_y > paddle_center and self.paddle_y < state.field_height - self.height + 1:
                 self.paddle_y += 1

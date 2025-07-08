@@ -40,10 +40,9 @@ A command-line Pong game rendered in ASCII art.
 - [x] Add two-player mode (both paddles controlled by users)
 
 ### 6. Polish & Features
-- [ ] Add a start screen and game over screen
-- [ ] Display instructions and controls
-- [ ] Add difficulty settings (ball speed, paddle size)
-- [ ] Optional: Add sound effects (beep on bounce/score)
+- [x] Add a start screen and game over screen
+- [x] Display instructions and controls
+- [x] Optional: Add sound effects (beep on bounce/score)
 
 ### 7. Packaging & Distribution
 - [ ] Add a command-line entry point for easy execution
