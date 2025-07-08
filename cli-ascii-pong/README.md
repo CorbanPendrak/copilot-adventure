@@ -17,10 +17,9 @@ A command-line Pong game rendered in ASCII art.
     - No external dependencies required for most systems, making setup simple and portable.
 - [x] Implement a function to render the game field, paddles, and ball using ASCII characters
 
-
 ### 3. Game Loop
-- [ ] Create the main game loop to update and render the game state at a fixed interval
-- [ ] Handle user input for paddle movement (e.g., W/S or Up/Down keys)
+- [x] Create the main game loop to update and render the game state at a fixed interval
+- [x] Handle user input for paddle movement (e.g., W/S or Up/Down keys)
 
 ### 4. Game Mechanics
 - [ ] Implement ball movement and bouncing logic

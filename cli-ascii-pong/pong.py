@@ -1,7 +1,20 @@
 # pong.py
 # Entry point for the CLI ASCII Pong game
+#
+# This file implements a simple ASCII Pong game using the curses library.
+# The game field, paddles, and ball are rendered in the terminal.
+#
+# The main game loop updates and redraws the game state at a fixed interval (0.1 seconds),
+# using time.sleep(0.05) to control the frame rate and reduce CPU usage.
+#
+# The render_game function checks if the terminal is large enough and waits if not,
+# allowing the user to resize the terminal before continuing.
+#
+# Controls:
+#   - Press 'q' to quit the game.
 
 import curses
+import time
 
 FIELD_HEIGHT = 20
 FIELD_WIDTH = 40
@@ -16,15 +29,22 @@ ball_x = 20
 ball_y = 10
 
 def render_game(stdscr, paddle1_y, paddle2_y, ball_x, ball_y):
-    stdscr.clear()
-    max_y, max_x = stdscr.getmaxyx()
-    required_y = FIELD_HEIGHT + 4  # field + borders + message
-    required_x = FIELD_WIDTH + 2   # field + borders
-    if max_y < required_y or max_x < required_x:
-        stdscr.addstr(0, 0, f"Terminal too small! Resize to at least {required_x}x{required_y}.")
-        stdscr.refresh()
-        stdscr.getch()
-        return
+    """
+    Render the game field, paddles, and ball using ASCII characters.
+    If the terminal is too small, display a warning and keep checking every second
+    until the terminal is resized to a sufficient size.
+    """
+    while True:
+        stdscr.clear()
+        max_y, max_x = stdscr.getmaxyx()
+        required_y = FIELD_HEIGHT + 4  # field + borders + message
+        required_x = FIELD_WIDTH + 2   # field + borders
+        if max_y < required_y or max_x < required_x:
+            stdscr.addstr(0, 0, f"Terminal too small! Resize to at least {required_x}x{required_y}.")
+            stdscr.refresh()
+            time.sleep(1)
+            continue
+        break
     # Draw top border
     stdscr.addstr(0, 0, '+' + '-' * FIELD_WIDTH + '+')
     # Draw field, paddles, and ball
@@ -45,20 +65,39 @@ def render_game(stdscr, paddle1_y, paddle2_y, ball_x, ball_y):
     stdscr.addstr(FIELD_HEIGHT + 1, 0, '+' + '-' * FIELD_WIDTH + '+')
     stdscr.refresh()
 
-def main():
-    def demo(stdscr):
+def game_loop(stdscr):
+    """
+    Main game loop: updates and renders the game state at a fixed interval (0.1 seconds).
+    Uses time.sleep(0.1) to control the frame rate and reduce CPU usage.
+    Handles paddle movement: 'w'/'s' for left, up/down for right.
+    """
+    # Initial positions
+    paddle1_y = FIELD_HEIGHT // 2 - PADDLE_HEIGHT // 2
+    paddle2_y = FIELD_HEIGHT // 2 - PADDLE_HEIGHT // 2
+    ball_x = FIELD_WIDTH // 2
+    ball_y = FIELD_HEIGHT // 2
 
-        # Default demo positions
-        demo_paddle1_y = FIELD_HEIGHT // 2 - PADDLE_HEIGHT // 2
-        demo_paddle2_y = FIELD_HEIGHT // 2 - PADDLE_HEIGHT // 2
-        demo_ball_x = FIELD_WIDTH // 2
-        demo_ball_y = FIELD_HEIGHT // 2
-        
-        render_game(stdscr, demo_paddle1_y, demo_paddle2_y, demo_ball_x, demo_ball_y)
-        stdscr.addstr(FIELD_HEIGHT + 3, 0, "Press any key to exit demo...")
-        stdscr.getch()
-    
-    curses.wrapper(demo)
+    while True:
+        render_game(stdscr, paddle1_y, paddle2_y, ball_x, ball_y)
+        stdscr.addstr(FIELD_HEIGHT + 3, 0, "Press 'q' to quit. W/S: left paddle, Up/Down: right paddle")
+        stdscr.nodelay(True)
+        key = stdscr.getch()
+        if key == ord('q'):
+            break
+        # Left paddle (W/S)
+        if key == ord('w') and paddle1_y > 1:
+            paddle1_y -= 1
+        elif key == ord('s') and paddle1_y < FIELD_HEIGHT - PADDLE_HEIGHT + 1:
+            paddle1_y += 1
+        # Right paddle (Up/Down)
+        elif key == curses.KEY_UP and paddle2_y > 1:
+            paddle2_y -= 1
+        elif key == curses.KEY_DOWN and paddle2_y < FIELD_HEIGHT - PADDLE_HEIGHT + 1:
+            paddle2_y += 1
+        time.sleep(0.05)  # Controls frame rate and reduces CPU usage
+
+def main():
+    curses.wrapper(game_loop)
 
 if __name__ == "__main__":
     main()
