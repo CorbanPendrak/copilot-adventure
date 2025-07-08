@@ -72,15 +72,34 @@ def game_loop(stdscr):
 
     Use time.sleep(0.1) to control the frame rate and reduce CPU usage.
     Handle paddle movement: 'w'/'s' for left, up/down for right.
+    Implement ball movement, bouncing logic, and scoring.
+    Also check if the terminal is resized too small during gameplay.
     """
     # Initial positions
     paddle1_y = FIELD_HEIGHT // 2 - PADDLE_HEIGHT // 2
     paddle2_y = FIELD_HEIGHT // 2 - PADDLE_HEIGHT // 2
     ball_x = FIELD_WIDTH // 2
     ball_y = FIELD_HEIGHT // 2
+    ball_dx = 1  # Ball movement direction (x)
+    ball_dy = 1  # Ball movement direction (y)
+    score_left = 0
+    score_right = 0
+    ball_tick = 0
+    ball_tick_max = 2  # Ball moves every 2 frames (slower)
+    required_y = FIELD_HEIGHT + 4
+    required_x = FIELD_WIDTH + 2
 
     while True:
+        max_y, max_x = stdscr.getmaxyx()
+        if max_y < required_y or max_x < required_x:
+            stdscr.clear()
+            stdscr.addstr(0, 0, f"Terminal too small! Resize to at least {required_x}x{required_y}.")
+            stdscr.refresh()
+            time.sleep(1)
+            continue
         render_game(stdscr, paddle1_y, paddle2_y, ball_x, ball_y)
+        # Display scores
+        stdscr.addstr(0, FIELD_WIDTH // 2 - 5, f"{score_left} : {score_right}")
         stdscr.addstr(FIELD_HEIGHT + 3, 0, "Press 'q' to quit. W/S: left paddle, Up/Down: right paddle")
         stdscr.nodelay(True)
         key = stdscr.getch()
@@ -96,6 +115,42 @@ def game_loop(stdscr):
             paddle2_y -= 1
         elif key == curses.KEY_DOWN and paddle2_y < FIELD_HEIGHT - PADDLE_HEIGHT + 1:
             paddle2_y += 1
+
+        # Ball movement (slower)
+        ball_tick += 1
+        if ball_tick >= ball_tick_max:
+            ball_x += ball_dx
+            ball_y += ball_dy
+            ball_tick = 0
+
+            # Bounce off top and bottom walls
+            if ball_y <= 1 or ball_y >= FIELD_HEIGHT:
+                ball_dy *= -1
+            # Bounce off left paddle
+            if ball_x == 3 and paddle1_y <= ball_y < paddle1_y + PADDLE_HEIGHT:
+                ball_dx *= -1
+            # Bounce off right paddle
+            if ball_x == FIELD_WIDTH - 2 and paddle2_y <= ball_y < paddle2_y + PADDLE_HEIGHT:
+                ball_dx *= -1
+            # Score for right player
+            if ball_x <= 1:
+                score_right += 1
+                ball_x = FIELD_WIDTH // 2
+                ball_y = FIELD_HEIGHT // 2
+                ball_dx = 1
+                ball_dy = 1 if ball_dy > 0 else -1
+                time.sleep(0.5)
+                continue
+            # Score for left player
+            if ball_x >= FIELD_WIDTH:
+                score_left += 1
+                ball_x = FIELD_WIDTH // 2
+                ball_y = FIELD_HEIGHT // 2
+                ball_dx = -1
+                ball_dy = 1 if ball_dy > 0 else -1
+                time.sleep(0.5)
+                continue
+
         time.sleep(0.05)  # Controls frame rate and reduces CPU usage
 
 def main():

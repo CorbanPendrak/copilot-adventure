@@ -30,9 +30,9 @@ A command-line Pong game rendered in ASCII art.
 - [x] Handle user input for paddle movement (e.g., W/S or Up/Down keys)
 
 ### 4. Game Mechanics
-- [ ] Implement ball movement and bouncing logic
-- [ ] Add collision detection for paddles and walls
-- [ ] Track and display scores for both players
+- [x] Implement ball movement and bouncing logic
+- [x] Add collision detection for paddles and walls
+- [x] Track and display scores for both players
 
 ### 5. Single & Multiplayer
 - [ ] Implement single-player mode (player vs. simple AI)
