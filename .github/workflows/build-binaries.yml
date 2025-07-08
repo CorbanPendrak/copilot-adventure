@@ -42,6 +42,41 @@ jobs:
         shell: bash
         working-directory: .
 
+      - name: Build arm64 executable (Apple Silicon)
+        if: matrix.os == 'macos-latest'
+        run: |
+          pyinstaller --onefile pong.py
+        working-directory: ./cli-ascii-pong
+
+      - name: Rename and move arm64 executable
+        if: matrix.os == 'macos-latest'
+        run: |
+          mv cli-ascii-pong/dist/pong cli-ascii-pong/dist/pong-macos-arm64
+        shell: bash
+        working-directory: .
+
+      - name: Build x86_64 (Intel) executable (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          if [ -x /usr/local/bin/python3 ]; then
+            arch -x86_64 /usr/local/bin/python3 -m pip install --upgrade pip
+            arch -x86_64 /usr/local/bin/python3 -m pip install -r requirements.txt
+            arch -x86_64 /usr/local/bin/python3 -m pip install pyinstaller
+            arch -x86_64 /usr/local/bin/python3 -m PyInstaller --onefile pong.py
+          else
+            echo \"No Intel Python found, skipping x86_64 build\"
+          fi
+        working-directory: ./cli-ascii-pong
+  
+      - name: Rename and move x86_64 executable
+        if: matrix.os == 'macos-latest'
+        run: |
+          if [ -f cli-ascii-pong/dist/pong ]; then
+            mv cli-ascii-pong/dist/pong cli-ascii-pong/dist/pong-macos-x86_64
+          fi
+        shell: bash
+        working-directory: .
+
       - name: Upload executables as workflow artifact
         uses: actions/upload-artifact@v4
         with:
