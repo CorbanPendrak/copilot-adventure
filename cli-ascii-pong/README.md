@@ -35,8 +35,9 @@ A command-line Pong game rendered in ASCII art.
 - [x] Track and display scores for both players
 
 ### 5. Single & Multiplayer
-- [ ] Implement single-player mode (player vs. simple AI)
-- [ ] Add two-player mode (both paddles controlled by users)
+- [x] Implement single-player mode (player vs. simple AI)
+- [x] Implement multiple AI types
+- [x] Add two-player mode (both paddles controlled by users)
 
 ### 6. Polish & Features
 - [ ] Add a start screen and game over screen
