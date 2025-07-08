@@ -1,0 +1,48 @@
+name: Build Pong Executables
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then pip install windows-curses; fi
+
+      - name: Build executable
+        run: |
+          pyinstaller --onefile pong.py
+        working-directory: ./cli-ascii-pong
+
+      - name: Rename and move executable
+        run: |
+          mkdir -p cli-ascii-pong/dist
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then mv cli-ascii-pong/dist/pong cli-ascii-pong/dist/pong-linux; fi
+          if [ "${{ matrix.os }}" = "macos-latest" ]; then mv cli-ascii-pong/dist/pong cli-ascii-pong/dist/pong-macos; fi
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then mv cli-ascii-pong/dist/pong.exe cli-ascii-pong/dist/pong-windows.exe; fi
+        shell: bash
+        working-directory: .
+
+      - name: Upload executables as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pong-binaries
+          path: cli-ascii-pong/dist/*
