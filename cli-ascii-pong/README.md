@@ -1,5 +1,12 @@
 # CLI ASCII Pong Game
 
+![GitHub Copilot](https://img.shields.io/badge/github_copilot-8957E5?style=flat&logo=github-copilot&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)
+[![macOS](https://img.shields.io/badge/mac%20os-000000?style=flat&logo=macos&logoColor=F0F0F0)](https://github.com/CorbanPendrak/copilot-adventure/releases/latest)
+[![Windows](https://img.shields.io/badge/Windows-0078D6?style=flat&logo=windows&logoColor=white)](https://github.com/CorbanPendrak/copilot-adventure/releases/latest)
+[![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black)](https://github.com/CorbanPendrak/copilot-adventure/releases/latest)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+
 A command-line Pong game rendered in ASCII art.
 
 ## About This Project

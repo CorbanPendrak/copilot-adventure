@@ -67,7 +67,7 @@ jobs:
             echo \"No Intel Python found, skipping x86_64 build\"
           fi
         working-directory: ./cli-ascii-pong
-  
+
       - name: Rename and move x86_64 executable
         if: matrix.os == 'macos-latest'
         run: |
